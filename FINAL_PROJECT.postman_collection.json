@@ -11,6 +11,21 @@
 			"item": [
 				{
 					"name": "SignIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"accessToken\", body.tokens.accessToken)",
+									"pm.environment.set(\"refreshToken\", body.tokens.refreshToken)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -38,6 +53,21 @@
 				},
 				{
 					"name": "Refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"accessToken\", body.accessToken)",
+									"pm.environment.set(\"refreshToken\", body.refreshToken)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -208,7 +238,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"body\": \"\"\n}",
+							"raw": "{\n    \"body\": \"Da yyyyyyyyyyyyyyyyyyyyyyyyyyy\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,13 +246,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/comments/689208239683e0751f0e904",
+							"raw": "{{baseUrl}}/comments/689208239683e0751f0e9047",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"comments",
-								"689208239683e0751f0e904"
+								"689208239683e0751f0e9047"
 							]
 						}
 					},

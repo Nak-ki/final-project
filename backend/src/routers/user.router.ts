@@ -23,4 +23,11 @@ router.get(
     userController.getAll
 )
 
+router.get(
+    "/:userId",
+    authMiddleware.checkAccessToken,
+    userMiddleware.isAdmin(),
+    userController.getById
+)
+
 export const userRouter = router;

@@ -26,7 +26,7 @@ const OrderSchema = new Schema(
         utm: {type: String},
         msg: {type: String},
 
-        _userId: { type: Schema.Types.ObjectId, required: true, ref: User },
+        _userId: { type: Schema.Types.ObjectId, required: false, ref: User },
     },
     {
         timestamps: true,

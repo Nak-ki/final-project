@@ -4,6 +4,7 @@ import {OrderCourseEnum} from "../enums/order-course.enum";
 import {OrderStatusEnum} from "../enums/order-status.enum";
 import { IComment } from "./comment.interface";
 
+
 export interface IOrder{
     id: number,
     _id: string,
@@ -25,6 +26,8 @@ export interface IOrder{
     utm: string,
     msg: string
 }
+
+export type IUpdateOrder = Pick<IOrder, "email" | "name" | "surname" | "age" | "alreadyPaid" | "course" | "course_format" | "course_type" | "phone" | "status" | "sum" | "group">;
 
 export interface IOrderWithComments extends IOrder{
     comments: IComment[];

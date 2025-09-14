@@ -6,6 +6,10 @@ class TokenRepository {
         return await Token.create(dto);
     }
 
+    public async logout(userId: string): Promise<void> {
+        await Token.findOneAndDelete({_userId: userId});
+    }
+
     public async findByParams(params: Partial<IToken>): Promise<IToken | null> {
         return await Token.findOne(params);
     }

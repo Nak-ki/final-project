@@ -24,13 +24,13 @@ export class AuthValidator {
             .messages({
                 "string.pattern.base": " min length 8, at least 1 number, at least 1 Uppercase, at least 1 lowercase"
             }),
-        confirm_password: Joi.string()
-            .trim()
-            .valid(Joi.ref('password'))
-            .required()
-            .messages({
-            'any.only': 'Passwords do not match', // Custom message for this specific validation failure
-        }),
+        // confirm_password: Joi.string()
+        //     .trim()
+        //     .valid(Joi.ref('password'))
+        //     .required()
+        //     .messages({
+        //     'any.only': 'Passwords do not match', // Custom message for this specific validation failure
+        // }),
     });
 
 }

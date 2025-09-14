@@ -105,6 +105,15 @@ class AuthService {
         });
         await tokenRepository.deleteManyByParams({ _userId: jwtPayload.userId });
     }
+
+    public async getMe(jwtPayload: ITokenPayload): Promise<IUser> {
+        return await userRepository.getById(jwtPayload.userId);
+    }
+
+    public async logout(jwtPayload: ITokenPayload): Promise<void> {
+        await tokenRepository.logout(jwtPayload.userId);
+    }
+
 }
 
 export const authService = new AuthService();

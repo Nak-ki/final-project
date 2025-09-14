@@ -14,6 +14,10 @@ class UserService{
         return {data: entities, total, limit};
     }
 
+    public async getById(userId: string): Promise<IUser> {
+        return await userRepository.getById(userId);
+    }
+
 }
 
 export const userService = new UserService();

@@ -18,16 +18,35 @@ class CommonMiddleware {
             }
         };
     }
+
     public isBodyValid(validator: ObjectSchema) {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
+                console.log("00000")
+                console.log(req.body)
                 req.body = await validator.validateAsync(req.body);
                 next();
             } catch (e) {
-                next(e);
+                next(new ApiError(e.details[0].message, 400));
             }
         };
     }
+
+    public isQueryValid(validator: ObjectSchema) {
+        return async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                const query = {...req.query}
+                console.log(query);
+                await validator.validateAsync(query);
+                console.log(5);
+                next();
+            } catch (e) {
+                next(new ApiError(e.details[0].message, 400));
+            }
+        };
+    }
+
+
 }
 
 export const commonMiddleware = new CommonMiddleware();

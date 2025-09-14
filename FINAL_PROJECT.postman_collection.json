@@ -11,21 +11,6 @@
 			"item": [
 				{
 					"name": "SignIn",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const body = JSON.parse(responseBody);",
-									"",
-									"pm.environment.set(\"accessToken\", body.tokens.accessToken)",
-									"pm.environment.set(\"refreshToken\", body.tokens.refreshToken)"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -146,7 +131,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"password\": \"Abracadabra1\",\n    \"confirm_password\": \"Abracadabra1\"\n}",
+							"raw": "{\n    \"password\": \"Abracadabra1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,6 +158,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -195,7 +208,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/orders?page=20&order=manager",
+							"raw": "{{baseUrl}}/orders?page=2&order=id&name=and&surname=max&email=com&phone=38&age=23&course=JSCX&course_format=static&course_type=pro&status=In work&group=oct-02-235&start_date=2022-05-25&end_date=2022-05-01&manager=Admin",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -205,12 +218,129 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "20"
+									"value": "2"
 								},
 								{
 									"key": "order",
-									"value": "manager"
+									"value": "id"
+								},
+								{
+									"key": "name",
+									"value": "and"
+								},
+								{
+									"key": "surname",
+									"value": "max"
+								},
+								{
+									"key": "email",
+									"value": "com"
+								},
+								{
+									"key": "phone",
+									"value": "38"
+								},
+								{
+									"key": "age",
+									"value": "23"
+								},
+								{
+									"key": "course",
+									"value": "JSCX"
+								},
+								{
+									"key": "course_format",
+									"value": "static"
+								},
+								{
+									"key": "course_type",
+									"value": "pro"
+								},
+								{
+									"key": "status",
+									"value": "In work"
+								},
+								{
+									"key": "group",
+									"value": "oct-02-235"
+								},
+								{
+									"key": "start_date",
+									"value": "2022-05-25"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-05-01"
+								},
+								{
+									"key": "manager",
+									"value": "Admin"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/689208239683e0751f0e9221",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"689208239683e0751f0e9221"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Семенова\",\n    \"surname\": \"Кузнецов\",\n    \"email\": \"rub.mansfield2016@yandex.com\",\n    \"phone\": \"8(920) 045-8\",\n    \"age\": 23,\n    \"course\": \"JCX\",\n    \"course_format\": \"online\",\n    \"course_type\": \"pro\",\n    \"sum\": null,\n    \"alreadyPaid\": null,\n    \"status\": \"In work\",\n    \"group\": \"oct-02-235\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/689208239683e0751f0e90c5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"689208239683e0751f0e90c5"
 							]
 						}
 					},
@@ -238,7 +368,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"body\": \"Da yyyyyyyyyyyyyyyyyyyyyyyyyyy\"\n}",
+							"raw": "{\n    \"body\": \"GGGGGGGGGGGGGGGGGGGGGGG\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -253,6 +383,46 @@
 							"path": [
 								"comments",
 								"689208239683e0751f0e9047"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"Da yyyyyyyyyyyyyyyyyyyyyyyyyyy\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments/68b063cece38b0d5672df138",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"68b063cece38b0d5672df138"
 							]
 						}
 					},
@@ -339,6 +509,114 @@
 									"key": "page",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/689de55d2f261bfb1f483ca9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"689de55d2f261bfb1f483ca9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GROUPS",
+			"item": [
+				{
+					"name": "Get groups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/groups",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"oct-02-235\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/groups",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"groups"
 							]
 						}
 					},

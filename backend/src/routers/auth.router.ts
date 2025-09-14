@@ -22,6 +22,18 @@ router.post(
     authController.refresh,
 );
 
+router.get(
+    "/me",
+    authMiddleware.checkAccessToken,
+    authController.getMe
+)
+
+router.delete(
+    "/logout",
+    authMiddleware.checkAccessToken,
+    authController.logout
+)
+
 router.post(
     "/activate/:userId",
     authMiddleware.checkAccessToken,

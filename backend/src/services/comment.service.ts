@@ -7,6 +7,7 @@ import { commentRepository } from "../repositories/comment.repository";
 import { OrderStatusEnum } from "../enums/order-status.enum";
 
 
+
 class CommentService{
     public async createComment(orderId: string, jwtPayload: ITokenPayload, dto: {body: string}): Promise<IComment> {
         const user = await userRepository.getById(jwtPayload.userId)
@@ -24,6 +25,10 @@ class CommentService{
 
 
         return comment;
+    }
+
+    public async getById(commentId: string): Promise<IComment> {
+        return await commentRepository.getById(commentId);
     }
 
 }

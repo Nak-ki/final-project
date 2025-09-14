@@ -3,6 +3,7 @@ import {ISignIn} from "../interfaces/user.interface";
 import {authService} from "../services/auth.service";
 import {ITokenPayload} from "../interfaces/token.interface";
 
+
 class AuthController {
 
     public async signIn(req: Request, res: Response, next: NextFunction) {
@@ -49,6 +50,26 @@ class AuthController {
             const payload = req.res.locals.jwtPayload as ITokenPayload
             const dto = req.body as {password: string, confirm_password: string}
             await authService.activateAccount(payload, dto.password)
+            res.sendStatus(204);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async getMe(req: Request, res: Response, next: NextFunction) {
+        try {
+            const payload = req.res.locals.jwtPayload as ITokenPayload
+            const result = await authService.getMe(payload);
+            res.json(result).status(200);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async logout(req: Request, res: Response, next: NextFunction) {
+        try {
+            const payload = req.res.locals.jwtPayload as ITokenPayload
+            await authService.logout(payload);
             res.sendStatus(204);
         } catch (e) {
             next(e);

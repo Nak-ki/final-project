@@ -3,11 +3,55 @@ import { IOrder, IOrderWithComments } from "../interfaces/order.interface";
 import { Order } from "../models/order.model";
 import { IOrderQuery } from "../interfaces/order-query.interface";
 import { OrderListEnum } from "../enums/order-list.enum";
+import { FilterQuery } from "mongoose";
 
 
 class OrderRepository {
     public async getAll(query: IOrderQuery): Promise<[IOrderWithComments[], number, number]> {
-        const skip = 25 * (+query.page - 1);
+        const page = query.page ? query.page : 1
+        const skip = 25 * (+page - 1);
+        const filterObj: FilterQuery<IOrderQuery> = {};
+        if (query.name) {
+            filterObj.name = { $regex: query.name, $options: "i" };
+        }
+        if (query.surname) {
+            filterObj.surname = { $regex: query.surname, $options: "i" };
+        }
+        if (query.email) {
+            filterObj.email = { $regex: query.email, $options: "i" };
+        }
+        if (query.phone) {
+            filterObj.phone = { $regex: query.phone, $options: "i" };
+        }
+        if (query.age) {
+            filterObj.age = +query.age;
+        }
+        if (query.course) {
+            filterObj.course = { $regex: query.course, $options: "i" };
+        }
+        if (query.course_format) {
+            filterObj.course_format = { $regex: query.course_format, $options: "i" };
+        }
+        if (query.course_type) {
+            filterObj.course_type = { $regex: query.course_type, $options: "i" };
+        }
+        if (query.status) {
+            filterObj.status = { $regex: query.status, $options: "i" };
+        }
+        if (query.group) {
+            filterObj.group = { $regex: query.group, $options: "i" };
+        }
+        if (query.start_date) {
+            filterObj.created_at = { $gte: query.start_date };
+        }
+        if (query.end_date) {
+            filterObj.created_at = query.start_date ? { $not: {$lt: query.start_date, $lte: query.end_date} } : { $lte: query.end_date };
+        }
+        if (query.manager) {
+            filterObj.manager = query.manager;
+        }
+
+
         // let sortObject: Record<string, 1 | -1> = {};
         // if (query.order) {
         //     switch (query.order) {
@@ -205,6 +249,9 @@ class OrderRepository {
         return Promise.all([
             await Order.aggregate([
                 {
+                    $match: filterObj ? filterObj : {}
+                },
+                {
                     $lookup: {
                         from: "comments",
                         let: { orderId: "$_id" },
@@ -226,7 +273,7 @@ class OrderRepository {
                     $limit: 25
                 }
             ]),
-            Order.countDocuments(),
+            Order.countDocuments(filterObj),
             25
         ])
     }
@@ -236,6 +283,10 @@ class OrderRepository {
     }
 
     public async updateById(dto: Partial<IOrder>): Promise<IOrder> {
+        return await Order.findByIdAndUpdate(dto._id, dto, {new: true} );
+    }
+
+    public async updateOrder(dto: Partial<IOrder>): Promise<IOrder> {
         return await Order.findByIdAndUpdate(dto._id, dto, {new: true} );
     }
 

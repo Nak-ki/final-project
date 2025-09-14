@@ -21,15 +21,19 @@ class AuthMiddleware {
                 throw new ApiError("Token is not provided", 401);
             }
             const accessToken = header.split("Bearer ")[1];
+            console.log(1);
             const payload = tokenService.verifyToken(
                 accessToken,
                 TokenTypeEnum.ACCESS,
             );
 
+            console.log(2);
+
             const pair = await tokenRepository.findByParams({ accessToken });
             if (!pair) {
                 throw new ApiError("Token is not valid", 401);
             }
+            console.log(3);
             req.res.locals.tokenId = pair._id;
             req.res.locals.jwtPayload = payload;
             next();

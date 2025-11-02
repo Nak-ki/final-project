@@ -1,0 +1,38 @@
+li {
+
+    height: 32px;
+    width: 34px;
+    border-radius: 50%;
+
+}
+
+ul {
+    gap: 5px;
+    padding: 10px 0 10px 0 !important;
+}
+
+li>button {
+    background: #0F9D58 !important;
+    color: white !important;
+    height: 32px !important;
+    width: 34px !important;
+
+}
+
+li>div {
+    background: #0F9D58 !important;
+    color: white !important;
+    height: 32px !important;
+    width: 34px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.Mui-selected {
+    background: #0c5131 !important;
+}
+
+button:disabled{
+    display: none !important;
+}

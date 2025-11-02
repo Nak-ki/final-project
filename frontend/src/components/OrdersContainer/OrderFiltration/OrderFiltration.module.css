@@ -1,0 +1,63 @@
+.MainDivFiltration {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0 10px 0;
+}
+
+.FormFiltration {
+    display: flex;
+    margin-left: 10px;
+}
+
+.DivInputs{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1700px;
+    gap: 7px;
+}
+
+.FormFiltration > div > input {
+    height: 15px;
+    width: 240px;
+    padding: 14px;
+    background: #E3E3E3;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.FormFiltration > div > select {
+    height: 44px;
+    width: 268px;
+    padding: 14px;
+    background: #E3E3E3;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.MyCheckbox{
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MyCheckbox > label > input{
+    width: 20px;
+    height: 20px;
+}
+.MyCheckbox > label{
+    font-size: 20px;
+}
+
+.DivButtons{
+    width: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+.DivButtons > button{
+    background: #0a673a;
+}

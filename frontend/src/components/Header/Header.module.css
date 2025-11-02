@@ -1,0 +1,45 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 75px;
+    background-color: #0F9D58;
+    color: snow;
+}
+
+.logo{
+    margin-left: 25px;
+}
+
+.tools{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-right: 20px;
+}
+
+.adminButton{
+    height: 40px;
+    width: 40px;
+    border: none;
+    border-radius: 15px;
+    background: #0d814a;
+}
+
+.logoutButton{
+    height: 40px;
+    width: 40px;
+    border: none;
+    border-radius: 15px;
+    background: #0d814a;
+}
+
+.UserName{
+    font-size: 35px;
+}
+svg {
+    width: 25px;
+    height: 25px;
+    color: white;
+}

@@ -3,6 +3,8 @@
 
 Final project
 
+# Backend
+
 ## User (Admin & Manager):
 - Admin and managers, who have an active account can login, refresh their tokens and logout;
 - User can create comments in Orders, after that this Order begins to be controlled by this user
@@ -29,6 +31,16 @@ Final project
 ## Groups
 - Can create group;
 - Can get all groups;
+
+
+# Frontend
+
+## Login Page
+- Can login with credentials: email: admin@gmail.com password: admin;
+
+## Orders Page
+- Sorting, Filtration, Pagination.
+
 
 ## Installation
 

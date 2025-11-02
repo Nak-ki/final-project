@@ -1,0 +1,8 @@
+tr:nth-child(event){
+    background-color: gray;
+}
+
+td {
+    padding: 8px;
+
+}

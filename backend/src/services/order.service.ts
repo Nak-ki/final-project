@@ -8,10 +8,10 @@ import { OrderStatusEnum } from "../enums/order-status.enum";
 
 
 class OrderService{
-    public async getOrders(query: IOrderQuery): Promise<{data: IOrderWithComments[], total: number, limit: number}> {
+    public async getOrders(query: IOrderQuery): Promise<{data: IOrderWithComments[], total: number, limit: number, page: string}> {
 
         const [entities, total, limit] = await orderRepository.getAll(query)
-        return {data: entities, total, limit};
+        return {data: entities, total, limit, page: query.page};
     }
 
     public async getById(orderId: string): Promise<IOrder> {

@@ -14,12 +14,15 @@ import dayjs from "dayjs";
 import { ActionTokenTypeEnum } from "../enums/action-token-type.enum";
 import { actionTokenRepository } from "../repositories/action-token.repository";
 import { config } from "../configs/configs";
+import { userPresenter } from "../presenters/user.presenter";
+
+
 
 class AuthService {
 
     public async signIn(
         dto: ISignIn,
-    ): Promise<{ user: IUser; tokens: ITokenPair }> {
+    ): Promise<{ user: Partial<IUser>; tokens: ITokenPair }> {
         const user = await userRepository.getByEmail(dto.email);
         if (!user) {
             throw new ApiError("User not found", 404);
@@ -47,7 +50,7 @@ class AuthService {
         const last_login = dayjs().format('MMMM D, YYYY')
         const updateUser = await userRepository.updateLastLogin(user._id, last_login)
 
-        return { user: updateUser, tokens };
+        return { user: userPresenter.UserPublicInfo(updateUser), tokens };
     }
 
 
@@ -106,8 +109,9 @@ class AuthService {
         await tokenRepository.deleteManyByParams({ _userId: jwtPayload.userId });
     }
 
-    public async getMe(jwtPayload: ITokenPayload): Promise<IUser> {
-        return await userRepository.getById(jwtPayload.userId);
+    public async getMe(jwtPayload: ITokenPayload): Promise<Partial<IUser>> {
+        const user = await userRepository.getById(jwtPayload.userId);
+        return userPresenter.UserPublicInfo(user)
     }
 
     public async logout(jwtPayload: ITokenPayload): Promise<void> {

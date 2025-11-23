@@ -7,7 +7,7 @@ import { IUser } from "../../interfaces/IUser";
 
 
 interface IState {
-    loginError: string
+    loginError: {status: number, message: string};
     currentUser: IUser
 }
 
@@ -54,8 +54,8 @@ const authSlice = createSlice({
         .addCase(login.fulfilled, (state, action) => {
             state.currentUser = action.payload
         })
-        .addCase(login.rejected, state => {
-            state.loginError = "Wrong email or password"
+        .addCase(login.rejected, (state, action) => {
+            state.loginError = action.payload as {status: number, message: string}
         })
         .addCase(me.fulfilled, (state, action) => {
             state.currentUser = action.payload

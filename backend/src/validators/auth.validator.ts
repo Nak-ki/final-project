@@ -12,7 +12,6 @@ export class AuthValidator {
             .required(),
         password: Joi.string()
             .trim()
-            .min(5)
             .required(),
     });
 

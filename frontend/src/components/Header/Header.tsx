@@ -18,13 +18,31 @@ const Header = () => {
     console.log(access)
 
     useEffect(() => {
-        if (access && !currentUser) {
-            dispatch(authActions.me())
-        } else if (!access) {
-            authService.deleteTokens()
+        // if (access && !currentUser) {
+        //     dispatch(authActions.me())
+        // } else if (!access) {
+        //     authService.deleteTokens()
+        //
+        //     navigate("/login")
+        // }
 
-            navigate("/login")
+        const isUserLogined = async () => {
+            if (access && !currentUser) {
+                const  {meta: {requestStatus}} = await dispatch(authActions.me())
+
+                if (requestStatus === "rejected") {
+                    authService.deleteTokens()
+
+                    navigate("/login")
+                }
+            } else if (!access) {
+                authService.deleteTokens()
+
+                navigate("/login")
+            }
         }
+        isUserLogined()
+
     }, [dispatch])
 
 

@@ -9,6 +9,7 @@ import { Order } from "../Order/Order";
 import css from "./Orders.module.css"
 import { OrderPagination } from "../OrderPagination/OrderPagination";
 import { OrderFiltration } from "../OrderFiltration/OrderFiltration";
+import { useDebounce } from "../../../hooks/useDebounceTime";
 
 
 const Orders = () => {
@@ -17,9 +18,17 @@ const Orders = () => {
     const {search} = useLocation()
     const [query, setQuery]  = useSearchParams()
 
+    const debounceValue = useDebounce(search, 2000)
+
     useEffect(() => {
-        dispatch(orderActions.getAll({query: search}))
-    }, [query])
+
+        if (debounceValue) {
+            dispatch(orderActions.getAll({query: debounceValue}))
+        } else {
+            dispatch(orderActions.getAll({query: search}))
+        }
+
+    }, [debounceValue])
 
 
     const sortedOrders = (column: string) => {

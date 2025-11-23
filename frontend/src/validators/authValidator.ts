@@ -5,10 +5,12 @@ const login= Joi.object({
         .regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
         .lowercase()
         .trim()
-        .required(),
+        .required()
+        .messages({
+            "string.pattern.base" : "Wrong credentials"
+        }),
     password: Joi.string()
         .trim()
-        .min(5)
         .required(),
     }
 )

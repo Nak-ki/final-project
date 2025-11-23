@@ -6,10 +6,12 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { authActions } from "../../store/slices/authSlice";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { login } from "../../validators/authValidator";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const LogIn = () => {
 
     const dispatch = useAppDispatch()
+    const {loginError} = useAppSelector(state => state.auth)
     const navigate = useNavigate()
 
 
@@ -32,8 +34,11 @@ const LogIn = () => {
             <form className={css.loginForm}  onSubmit={handleSubmit(toLogin)}>
                 <h3>Email</h3>
                 <input className={css.inputEmail} type="text" placeholder={'Email'} {...register('email')}/>
+                {errors.email && <p>{errors.email.message}</p>}
                 <h3>Password</h3>
                 <input className={css.inputPassword} type="password" placeholder={'Password'} {...register('password')}/>
+                {errors.password && <p>{errors.password.message}</p>}
+                {loginError && <p>{loginError.message}</p>}
                 <button className={css.buttonLog}>LOGIN</button>
             </form>
         </div>

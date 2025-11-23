@@ -24,16 +24,14 @@ class AuthService {
         dto: ISignIn,
     ): Promise<{ user: Partial<IUser>; tokens: ITokenPair }> {
         const user = await userRepository.getByEmail(dto.email);
-        if (!user) {
-            throw new ApiError("User not found", 404);
-        }
 
         const isPasswordCorrect = await passwordService.comparePassword(
             dto.password,
             user.password,
         );
+
         if (!isPasswordCorrect) {
-            throw new ApiError("Invalid credentials", 401);
+            throw new ApiError("Invalid email or password", 401);
         }
 
         await tokenRepository.deleteManyByUserId(user._id)

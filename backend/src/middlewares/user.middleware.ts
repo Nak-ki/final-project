@@ -57,6 +57,24 @@ class UserMiddleware{
             }
         }
     }
+
+    public isUserExistByEmail() {
+        return async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                const dto = req.body as ISignIn;
+                const user = await userRepository.getByEmail(dto.email)
+
+                if (!user) {
+                    throw new ApiError("Invalid email or password", 401)
+                }
+
+                next();
+            } catch (e) {
+                next(e);
+            }
+        }
+    }
+
 }
 
 export const  userMiddleware  = new UserMiddleware();

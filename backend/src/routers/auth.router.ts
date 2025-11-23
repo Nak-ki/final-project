@@ -12,6 +12,7 @@ const router = Router();
 router.post(
     "/sign-in",
     commonMiddleware.isBodyValid(AuthValidator.SignIn),
+    userMiddleware.isUserExistByEmail(),
     userMiddleware.isUserActive(),
     authController.signIn,
 );

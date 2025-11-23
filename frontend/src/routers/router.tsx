@@ -4,6 +4,7 @@ import { PublicLayout } from "../layouts/PublicLayout";
 import { LoginPage } from "../pages/LoginPage";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { OrderPage } from "../pages/OrderPage";
+import { LoginedUser } from "../hoc/LoginedUser";
 
 export const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
                 index: true, element:<Navigate to={"/login"}/>
             },
             {
-                element:<PublicLayout/>, children: [
+                element:<LoginedUser><PublicLayout/></LoginedUser>, children: [
                     {
                         path: "login", element: <LoginPage/>
                     }

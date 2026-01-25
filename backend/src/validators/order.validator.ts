@@ -35,7 +35,9 @@ export class OrderValidator {
         sum: Joi.number().allow('', null).required(),
         surname: Joi.string().allow('', null).required(),
         alreadyPaid: Joi.number().allow(null, '').required(),
-        email: Joi.string().regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).allow('', null).required(),
+        email: Joi.string().regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).allow('', null).required().messages({
+            "string.pattern.base" : "Invalid email"
+        }),
         course: Joi.string().valid(...Object.values(OrderCourseEnum)).allow('', null).required(),
         phone: Joi.string().allow('', null).required(),
         course_format: Joi.string().valid(...Object.values(OrderCourseFormatEnum)).allow('', null).required(),

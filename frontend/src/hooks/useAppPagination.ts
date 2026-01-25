@@ -6,7 +6,7 @@ const useAppPagination = () => {
     const {total, limit} = useAppSelector(state => state.order);
     const [query, setQuery] = useSearchParams({page: "1"})
 
-    const page = query.get("page")
+    const page = query.get("page" ) ? query.get("page") : "1";
 
     const pages = Math.ceil(total / limit)
 

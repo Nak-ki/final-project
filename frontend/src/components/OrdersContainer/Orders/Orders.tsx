@@ -13,7 +13,8 @@ import { useDebounce } from "../../../hooks/useDebounceTime";
 
 
 const Orders = () => {
-    const {orders} = useAppSelector(state => state.order);
+    const {orders, updateTrigger} = useAppSelector(state => state.order);
+    const {commentTrigger} = useAppSelector(state => state.comment);
     const dispatch = useAppDispatch();
     const {search} = useLocation()
     const [query, setQuery]  = useSearchParams()
@@ -28,7 +29,7 @@ const Orders = () => {
             dispatch(orderActions.getAll({query: search}))
         }
 
-    }, [debounceValue])
+    }, [debounceValue, commentTrigger, updateTrigger])
 
 
     const sortedOrders = (column: string) => {
@@ -300,7 +301,7 @@ const Orders = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {orders && orders.map(order => <Order key={order.id} order={order}/>)}
+                {orders && orders.map(( order, index ) => <Order key={order.id} order={order} index={index}/>)}
                 </tbody>
             </table>
             <OrderPagination/>

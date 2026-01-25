@@ -1,8 +1,119 @@
-tr:nth-child(event){
-    background-color: gray;
-}
+/*tr:nth-child(event){*/
+/*    background-color: gray;*/
+/*}*/
 
 td {
     padding: 8px;
 
+}
+
+.dropdownGrey {
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+
+.dropdownWhite {
+    height: 250px;
+    width: 100%;
+    position: relative;
+    background-color: white;
+}
+
+.even {
+    background-color: lightgray;
+}
+
+.odd {
+    background-color: white;
+}
+
+.message {
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    margin: 0;
+}
+.utm {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    margin: 0;
+
+}
+
+.divForm {
+    width: 760px;
+
+    padding: 10px;
+    position: absolute;
+    right: 110px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px
+}
+
+.input {
+    width: 600px;
+    padding: 10px;
+    background: #E3E3E3;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+.button {
+    margin-left: 10px;
+    width: 100px;
+    padding: 8px;
+    background: #0a673a;
+    color: white;
+    border-radius: 10px;
+    outline: none;
+}
+.commentsDiv {
+    padding-top: 30px;
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+}
+
+.commentDiv {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    background: white;
+}
+.p {
+    margin: 5px;
+}
+
+.form {
+    background: white;
+    padding: 10px;
+}
+
+.inputError {
+    border: 1px solid red;
+    width: 600px;
+    padding: 10px;
+    background: #E3E3E3;
+    border-radius: 10px;
+    outline: none;
+}
+
+tr.even:hover {
+    background-color: #0F9D58;
+    color: white;
+}
+tr.odd:hover {
+    background-color: #0F9D58;
+    color: white;
+}
+
+.treven {
+    background-color: lightgray !important;
+}
+
+.trodd {
+    background-color: white !important;
 }

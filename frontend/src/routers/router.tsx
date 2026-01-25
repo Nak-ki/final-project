@@ -5,6 +5,7 @@ import { LoginPage } from "../pages/LoginPage";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { OrderPage } from "../pages/OrderPage";
 import { LoginedUser } from "../hoc/LoginedUser";
+import { Refresh } from "../hoc/Refresh";
 
 export const router = createBrowserRouter([
     {
@@ -20,7 +21,7 @@ export const router = createBrowserRouter([
                 ]
             },
             {
-                element:<AuthLayout/>, children: [
+                element:<Refresh><AuthLayout/></Refresh>, children: [
                     {
                         path: "orders", element: <OrderPage/>
                     }

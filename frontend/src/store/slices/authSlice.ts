@@ -45,6 +45,19 @@ const me = createAsyncThunk<IUser, void>(
     }
 )
 
+const logout = createAsyncThunk<void, void>(
+    "authSlice/logout",
+    async (_, thunkAPI) => {
+        try {
+            await authService.logout()
+        }
+        catch (e) {
+            const error = e as AxiosError
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: "authSlice",
     initialState,
@@ -66,12 +79,16 @@ const authSlice = createSlice({
 
 })
 
+
+
 const {reducer: authReducer, actions} = authSlice
 
 const authActions = {
     ...actions,
     login,
-    me
+    me,
+    logout,
+
 }
 
 export {

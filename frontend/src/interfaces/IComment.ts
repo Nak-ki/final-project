@@ -3,7 +3,8 @@ export interface IComment {
     name: string;
     surname: string;
     body: string;
-    createdAt: string;
+    createdAt: Date;
+    date: string;
     _userId: string;
     _orderId: string;
 }

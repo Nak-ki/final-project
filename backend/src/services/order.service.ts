@@ -5,13 +5,15 @@ import { ApiError } from "../errors/api.error";
 import { userRepository } from "../repositories/user.repository";
 import { groupRepository } from "../repositories/group.repository";
 import { OrderStatusEnum } from "../enums/order-status.enum";
+import { orderPresenter } from "../presenters/order.presenter";
 
 
 class OrderService{
     public async getOrders(query: IOrderQuery): Promise<{data: IOrderWithComments[], total: number, limit: number, page: string}> {
 
         const [entities, total, limit] = await orderRepository.getAll(query)
-        return {data: entities, total, limit, page: query.page};
+        // return {data: entities, total, limit, page: query.page};
+        return orderPresenter.OrderPublicInfo(entities, total, limit, query.page)
     }
 
     public async getById(orderId: string): Promise<IOrder> {

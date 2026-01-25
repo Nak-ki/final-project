@@ -1,0 +1,73 @@
+ .style {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     width: 1000px;
+     background: white;
+     bgcolor: background.paper;
+     border: none;
+     boxShadow: 24px;
+     p: 4;
+     padding: 30px;
+     border-radius: 10px;
+ }
+ .formWindow {
+     display: flex;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     gap: 1rem;
+ }
+
+ label {
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+ }
+
+ .formWindow> label > input {
+     height: 15px;
+     width: 460px;
+     padding: 14px;
+     background: #E3E3E3;
+     border-radius: 10px;
+     border: none;
+     outline: none;
+ }
+
+ .formWindow> label > select {
+     height: 44px;
+     width: 488px;
+     padding: 14px;
+     background: #E3E3E3;
+     border-radius: 10px;
+     border: none;
+     outline: none;
+ }
+
+ .buttonsDiv{
+     display: flex;
+     width: 100%;
+     justify-content: flex-end;
+     align-items: center;
+     gap: 10px;
+ }
+ .buttonsDiv > button {
+     border: none;
+     background: #0a673a;
+     padding: 20px 40px 20px 40px;
+     color: white;
+ }
+
+ .editButton {
+     padding: 10px 20px 10px 20px;
+     background: #0a673a;
+     color: white;
+     position: absolute;
+     top: 50%;
+     right: 30px;
+ }
+
+ .inputError{
+     border: 1px solid red !important;
+ }

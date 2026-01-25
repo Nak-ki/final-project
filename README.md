@@ -37,9 +37,14 @@ Final project
 
 ## Login Page
 - Can login with credentials: email: admin@gmail.com password: admin;
+- Possible to hide/show the password;
+
+## Header
+- Possible to logout;
 
 ## Orders Page
 - Sorting, Filtration, Pagination.
+- Possible to add comments and update the order in modal window;
 
 
 ## Installation

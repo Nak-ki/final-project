@@ -3,10 +3,10 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { authService } from "../../services/authService";
 import { useEffect } from "react";
 import { authActions } from "../../store/slices/authSlice";
-import { useNavigate } from "react-router-dom";
 import {Logout, ManageAccounts} from '@mui/icons-material';
 import css from "./Header.module.css";
 import { RoleEnum } from "../../enums/RoleEnum";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
     const {currentUser} = useAppSelector(state => state.auth)
@@ -15,35 +15,21 @@ const Header = () => {
 
     const access = authService.getAccessToken();
 
-    console.log(access)
+    const logout = async () => {
+        const {meta: {requestStatus}} = await dispatch(authActions.logout())
+
+        if (requestStatus === 'fulfilled') {
+            navigate("/login");
+        }
+
+    }
 
     useEffect(() => {
-        // if (access && !currentUser) {
-        //     dispatch(authActions.me())
-        // } else if (!access) {
-        //     authService.deleteTokens()
-        //
-        //     navigate("/login")
-        // }
-
-        const isUserLogined = async () => {
-            if (access && !currentUser) {
-                const  {meta: {requestStatus}} = await dispatch(authActions.me())
-
-                if (requestStatus === "rejected") {
-                    authService.deleteTokens()
-
-                    navigate("/login")
-                }
-            } else if (!access) {
-                authService.deleteTokens()
-
-                navigate("/login")
-            }
+        if (access && !currentUser) {
+            dispatch(authActions.me())
         }
-        isUserLogined()
 
-    }, [dispatch])
+    }, [dispatch, access])
 
 
     return (
@@ -54,7 +40,7 @@ const Header = () => {
                 <div className={css.tools}>
                     <p>{currentUser && currentUser.name}</p>
                     { currentUser && currentUser.role === RoleEnum.ADMIN && <button className={css.adminButton}><ManageAccounts/></button>}
-                    <button className={css.logoutButton}><Logout/></button>
+                    <button onClick={logout} className={css.logoutButton}><Logout/></button>
                 </div>
         </div>
     );

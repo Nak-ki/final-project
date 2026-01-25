@@ -43,6 +43,11 @@ const authService = {
     deleteTokens(): void {
         localStorage.removeItem(accessTokenKey)
         localStorage.removeItem(refreshTokenKey)
+    },
+
+    async logout(): Promise<void> {
+        await apiService.delete(urls.auth.logout)
+        this.deleteTokens()
     }
 }
 

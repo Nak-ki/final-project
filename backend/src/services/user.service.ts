@@ -1,6 +1,7 @@
-import { ICreateManager, IUser } from "../interfaces/user.interface";
+import { ICreateManager, IUser, IUserRes } from "../interfaces/user.interface";
 import { userRepository } from "../repositories/user.repository";
 import { IUserQuery } from "../interfaces/user-query.interface";
+import { userPresenter } from "../presenters/user.presenter";
 
 class UserService{
     public async createManager(dto: ICreateManager): Promise<IUser> {
@@ -8,10 +9,11 @@ class UserService{
         return await userRepository.create(dto, lastId + 1);
     }
 
-    public async getAll(query: IUserQuery): Promise<{data: IUser[], total: number, limit: number}> {
+    public async getAll(query: IUserQuery): Promise<{data: IUserRes[], total: number, limit: number, page: string}> {
 
         const [entities, total, limit] = await userRepository.getAll(query)
-        return {data: entities, total, limit};
+
+        return userPresenter.getAllUsers(entities, total, limit, query.page);
     }
 
     public async getById(userId: string): Promise<IUser> {

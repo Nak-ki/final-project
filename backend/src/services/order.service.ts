@@ -6,14 +6,28 @@ import { userRepository } from "../repositories/user.repository";
 import { groupRepository } from "../repositories/group.repository";
 import { OrderStatusEnum } from "../enums/order-status.enum";
 import { orderPresenter } from "../presenters/order.presenter";
+import { excelService } from "./excel.service";
+import exceljs from "exceljs";
 
 
 class OrderService{
     public async getOrders(query: IOrderQuery): Promise<{data: IOrderWithComments[], total: number, limit: number, page: string}> {
 
         const [entities, total, limit] = await orderRepository.getAll(query)
-        // return {data: entities, total, limit, page: query.page};
         return orderPresenter.OrderPublicInfo(entities, total, limit, query.page)
+    }
+
+    public async getOrdersStatistic(): Promise<{total: number, aggre: number, in_work: number, disaggre: number, dubbing: number, new: number}> {
+
+        const [total, aggre, in_work, disaggre, dubbing, New, Null] = await orderRepository.getOrdersStatistic()
+        return{
+            total,
+            aggre,
+            in_work,
+            disaggre,
+            dubbing,
+            new: New + Null
+        }
     }
 
     public async getById(orderId: string): Promise<IOrder> {
@@ -34,14 +48,17 @@ class OrderService{
         }
 
         if (dto.status === OrderStatusEnum.NEW) {
-            console.log("n")
             return await orderRepository.updateOrder({...dto, _id: order._id, manager: null, _userId: null});
         } else {
-            console.log("i")
             return await orderRepository.updateOrder({...dto, _id: order._id, manager: user.name, _userId: user._id});
         }
+    }
 
+    public async getExcelDoc(query: IOrderQuery): Promise<exceljs.Workbook> {
 
+        const data = await orderRepository.getDataForExcel(query)
+
+        return await excelService.getWorkbook(data)
     }
 
 }

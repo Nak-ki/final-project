@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
@@ -10,6 +10,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { updateOrder } from "../../../validators/orderValidator";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { orderActions } from "../../../store/slices/orderSlice";
+import { groupActions } from "../../../store/slices/groupSlice";
 
 interface IProps {
     order: IOrderWithComments;
@@ -17,10 +18,14 @@ interface IProps {
 }
 
 const ModalWindow :FC<IProps> = ({order}) => {
-    const {handleSubmit, register, reset, formState:{errors}, setValue} = useForm<{group:string, status:string, name:string, sum:number, surname:string,  alreadyPaid: number, email: string, course: string, phone: string, course_format: string, age: number, course_type: string}>({
+    const [changeInput, setChangeInput] = useState<boolean>(false);
+    const {handleSubmit, register, reset, formState:{errors}, setValue, getValues} = useForm<{group:string, status:string, name:string, sum:number, surname:string,  alreadyPaid: number, email: string, course: string, phone: string, course_format: string, age: number, course_type: string}>({
         mode:"all",
         resolver: joiResolver(updateOrder)
     })
+
+    // const inputRef = useRef(null)
+
     const {groups} = useAppSelector(state => state.group)
     const dispatch = useAppDispatch()
 
@@ -87,6 +92,14 @@ const ModalWindow :FC<IProps> = ({order}) => {
         handleClose()
     }
 
+    const addGroup = () => {
+        const values = getValues("group")
+        dispatch(groupActions.create({name: values}))
+       // dispatch(groupActions.create({name: inputRef.current.value}));
+        // console.log(inputRef.current.value);
+       setChangeInput(false)
+    }
+
         return (
             <div>
                 <button className={css.editButton} onClick={handleOpen}>EDIT</button>
@@ -98,25 +111,42 @@ const ModalWindow :FC<IProps> = ({order}) => {
                 >
                     <Box className={css.style}>
                         <form onSubmit={handleSubmit(editDTO)} className={css.formWindow}>
-                            <label>Group
-                                <select name={"group"} {...register("group")}>
-                                <option value="">all groups</option>
-                                {
-                                    groups && groups.map((group) => <option value={group.name}>{group.name}</option>)
-                                }
-
-                                </select>
-                            </label>
+                            <div className={css.inputDiv}>
+                                <label>Group
+                                    { changeInput ?
+                                        <>
+                                            <input type="text" name={"group"} placeholder={'Group'} {...register("group")}/>
+                                            <div>
+                                                <button type="button" onClick={() => setChangeInput(false)}>SELECT</button>
+                                                <button type="button" onClick={addGroup}>ADD GROUP</button>
+                                            </div>
+                                        </>
+                                        :
+                                        <>
+                                            <select name={"group"} {...register("group")}>
+                                                <option value="">all groups</option>
+                                                {
+                                                    groups && groups.map((group) => <option value={group.name}>{group.name}</option>)
+                                                }
+                                            </select>
+                                            <div>
+                                                <button type="button" onClick={() => setChangeInput(true)} className={css.addGroups}>ADD GROUPS</button>
+                                            </div>
+                                        </>
+                                    }
+                                   </label>
+                               </div>
                             <label>Status
                                 <select name={"status"} {...register("status")}>
-                                <option value="">all status</option>
-                                <option value="In work">In work</option>
-                                <option value="New">New</option>
-                                <option value="Aggre">Aggre</option>
-                                <option value="Disaggre">Disaggre</option>
-                                <option value="Dubbing">Dubbing</option>
+                                    <option value="">all status</option>
+                                    <option value="In work">In work</option>
+                                    <option value="New">New</option>
+                                    <option value="Aggre">Aggre</option>
+                                    <option value="Disaggre">Disaggre</option>
+                                    <option value="Dubbing">Dubbing</option>
                                 </select>
                             </label>
+
                             <label>Name
                                 <input className={errors.name && css.inputError} type={"text"} name={"name"} placeholder={"Name"} {...register("name")} />
                                 {errors.name && errors.name.message}

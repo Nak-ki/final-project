@@ -12,10 +12,12 @@ Final project
 - Get all orders;
 
 
+
 ### Admin:
 - Can create Managers;
-- Get all users, with pagination, limit: 25, sort by default ( createdAt: -1(DESC));
+- Get all users and their statistics, with pagination, limit: 25, sort by default ( createdAt: -1(DESC));
 - Can create link for activate manager's account;
+- Get orders statistics;
 
 ### Manager:
 - Can activate account use link;
@@ -45,6 +47,7 @@ Final project
 ## Orders Page
 - Sorting, Filtration, Pagination.
 - Possible to add comments and update the order in modal window;
+- Added the ability to download an Excel file;
 
 
 ## Installation

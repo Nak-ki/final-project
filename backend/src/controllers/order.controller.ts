@@ -9,7 +9,6 @@ import { IUpdateOrder } from "../interfaces/order.interface";
 class OrderController {
     public async getOrders(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log(1);
             const query = req.query as unknown as IOrderQuery;
             const result = await orderService.getOrders(query);
             res.json(result).status(201);
@@ -28,6 +27,16 @@ class OrderController {
         }
     }
 
+    public async getOrdersStatistic(req: Request, res: Response, next: NextFunction) {
+        try {
+            const result = await orderService.getOrdersStatistic();
+            res.json(result).status(201);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+
     public async updateOrder(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.orderId
@@ -39,6 +48,28 @@ class OrderController {
             next(e);
         }
     }
+
+    public async getExcelDoc(req: Request, res: Response, next: NextFunction) {
+        try {
+            console.log(0);
+            const query = req.query as unknown as IOrderQuery;
+            const workbook = await orderService.getExcelDoc(query);
+
+            res.setHeader(
+                'Content-Type','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        );
+            res.setHeader(
+                'Content-Disposition', 'attachment; filename=data.xlsx'
+        );
+            await workbook.xlsx.write(res);
+            res.end();
+        } catch (e) {
+            res.status(500).send('Ошибка при генерации файла');
+            next(e);
+        }
+    }
+
+
 
 }
 

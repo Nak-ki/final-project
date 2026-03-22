@@ -15,6 +15,7 @@ const urls = {
     orders: {
         getAll:  (query: string) => orders + query,
         update:  (id: string) => `${orders}/${id}`,
+        downloadExcel: (query: string) => `${orders}/download-excel${query}` ,
     },
     comments: {
         create: (id: string) => `${comments}/${id}`,

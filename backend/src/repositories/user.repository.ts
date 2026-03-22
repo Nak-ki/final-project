@@ -1,7 +1,8 @@
 
-import { IUser} from "../interfaces/user.interface";
+import { IDataUser, IUser } from "../interfaces/user.interface";
 import { User } from "../models/user.model";
 import { IUserQuery } from "../interfaces/user-query.interface";
+import { OrderStatusEnum } from "../enums/order-status.enum";
 
 class UserRepository {
 
@@ -9,10 +10,74 @@ class UserRepository {
         return await User.create({...dto, id: lastId});
     }
 
-    public async getAll(query: IUserQuery): Promise<[IUser[], number, number]> {
+    public async getAll(query: IUserQuery): Promise<[IDataUser[], number, number]> {
         const skip = 25 * (+query.page - 1);
-        return Promise.all([
-            await User.find().sort({createdAt: -1}).skip(skip).limit(25),
+        return await Promise.all([
+        //     await User.find().sort({createdAt: -1}).skip(skip).limit(25),
+        //     User.countDocuments(),
+        //     25
+            User.aggregate([
+                {
+                    $lookup: {
+                        from: "orders",
+                        let: { userId: "$_id" },
+                        as: "total",
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$_userId", "$$userId"] } } },
+                        ]
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "orders",
+                        let: { userId: "$_id" },
+                        as: "aggre",
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$_userId", "$$userId"] } } },
+                            { $match: { status: { $eq: OrderStatusEnum.AGGRE } } }
+                        ]
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "orders",
+                        let: { userId: "$_id" },
+                        as: "disaggre",
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$_userId", "$$userId"] } } },
+                            { $match: { status: { $eq: OrderStatusEnum.DISAGGRE } } }
+                        ]
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "orders",
+                        let: { userId: "$_id" },
+                        as: "in_work",
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$_userId", "$$userId"] } } },
+                            { $match: { status: { $eq: OrderStatusEnum.IN_WORK } } }
+                        ]
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "orders",
+                        let: { userId: "$_id" },
+                        as: "dubbing",
+                        pipeline: [
+                            { $match: { $expr: { $eq: ["$_userId", "$$userId"] } } },
+                            { $match: { status: { $eq: OrderStatusEnum.DUBBING } } }
+                        ]
+                    }
+                },
+                {
+                    $sort: {createdAt: -1}
+                },
+                {
+                    $skip: skip,
+                }
+            ]).limit(25),
             User.countDocuments(),
             25
         ])

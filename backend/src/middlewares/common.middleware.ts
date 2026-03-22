@@ -33,8 +33,10 @@ class CommonMiddleware {
     public isQueryValid(validator: ObjectSchema) {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
+
                 const query = {...req.query}
                 await validator.validateAsync(query);
+
                 next();
             } catch (e) {
                 next(new ApiError(e.details[0].message, 400));

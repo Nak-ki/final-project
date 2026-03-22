@@ -57,6 +57,7 @@
      background: #0a673a;
      padding: 20px 40px 20px 40px;
      color: white;
+     border-radius: 8px;
  }
 
  .editButton {
@@ -70,4 +71,50 @@
 
  .inputError{
      border: 1px solid red !important;
+ }
+
+ .inputDiv{
+    width: 488px;
+ }
+
+ .inputDiv select{
+     height: 44px;
+     width: 488px;
+     padding: 14px;
+     background: #E3E3E3;
+     border-radius: 10px;
+     border: none;
+     outline: none;
+     margin-bottom: 0;
+ }
+
+ .addGroups{
+     margin-top: 0;
+     width: 488px;
+     border: none;
+     background: #0a673a;
+     height: 16px;
+     border-radius: 8px ;
+     color: white;
+ }
+
+ .inputDiv input{
+     height: 15px;
+     width: 460px;
+     padding: 14px;
+     background: #E3E3E3;
+     border-radius: 10px;
+     border: none;
+     outline: none;
+ }
+
+ .inputDiv>label>div>button{
+     margin-top: 0;
+     width: 50%;
+     border: none;
+     background: #0a673a;
+     height: 16px;
+     border-radius: 8px ;
+     color: white;
+
  }

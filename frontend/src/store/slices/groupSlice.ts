@@ -1,15 +1,17 @@
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { IGroup } from "../../interfaces/IGroup";
 import { groupService } from "../../services/groupService";
 
 interface IState {
     groups: IGroup[];
+    addGroupTrigger: boolean;
 }
 
 const initialState: IState = {
     groups: [],
+    addGroupTrigger: false,
 }
 
 
@@ -52,6 +54,9 @@ const groupSlice = createSlice({
         .addCase(getAll.fulfilled, (state, action) => {
             state.groups = action.payload
 
+        })
+        .addMatcher(isFulfilled(create), (state, action) => {
+            state.addGroupTrigger = !state.addGroupTrigger
         })
 
 })

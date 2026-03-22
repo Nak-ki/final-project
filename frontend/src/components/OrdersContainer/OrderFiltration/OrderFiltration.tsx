@@ -4,16 +4,21 @@ import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { useEffect, useState } from "react";
 import { groupActions } from "../../../store/slices/groupSlice";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { InsertDriveFile, Replay } from "@mui/icons-material";
 
 import css from "./OrderFiltration.module.css"
+import { useDebounce } from "../../../hooks/useDebounceTime";
+import { orderActions } from "../../../store/slices/orderSlice";
 
 
 const OrderFiltration = () => {
     const dispatch = useAppDispatch()
-    const {groups} = useAppSelector(state => state.group)
+    const {groups, addGroupTrigger} = useAppSelector(state => state.group)
     const [query, setQuery] = useSearchParams()
+    const {search} = useLocation()
+
+    const debouncerValue = useDebounce(query.toString(), 2000)
 
     const [typeForStartDate, setTypeForStartDate] = useState<boolean>(false);
     const [typeForEndDate, setTypeForEndDate] = useState<boolean>(false);
@@ -80,7 +85,7 @@ const OrderFiltration = () => {
         }else {
             setValue('manager', false)
         }
-    }, [query]);
+    }, [debouncerValue, addGroupTrigger]);
 
     const change : SubmitHandler<IFiltration> = async (queries) => {
         if (queries.name) {
@@ -220,6 +225,11 @@ const OrderFiltration = () => {
         navigate('/orders')
     }
 
+    const saveExcel = () => {
+        console.log(search);
+        dispatch(orderActions.downloadExcel({query: search}))
+    }
+
 
 
 
@@ -282,7 +292,7 @@ const OrderFiltration = () => {
            </form>
             <div className={css.DivButtons}>
                 <button onClick={() => resetForm()}> <Replay/> </button>
-                <button> <InsertDriveFile/> </button>
+                <button type={"button"} onClick={saveExcel}> <InsertDriveFile/> </button>
             </div>
         </div>
     );

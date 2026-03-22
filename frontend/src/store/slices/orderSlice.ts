@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 import { IOrderWithComments } from "../../interfaces/IOrder";
 import { orderService } from "../../services/orderService";
+import { saveAs } from 'file-saver';
 
 
 
@@ -50,6 +51,21 @@ const update = createAsyncThunk<void, {id: string, body: {group:string, status:s
     }
 )
 
+const downloadExcel = createAsyncThunk<void, {query: string}>(
+    "orderSlice/downloadExcel",
+    async ({query}, thunkAPI) => {
+        try {
+            const {data} = await orderService.downloadExcel(query);
+            saveAs(data, `Orders.xlsx`);
+
+        }
+        catch (e) {
+            const error = e as AxiosError
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
+
 
 
 const orderSlice = createSlice({
@@ -74,7 +90,8 @@ const {reducer: orderReducer, actions} = orderSlice
 const orderActions = {
     ...actions,
     getAll,
-    update
+    update,
+    downloadExcel
 }
 
 export {

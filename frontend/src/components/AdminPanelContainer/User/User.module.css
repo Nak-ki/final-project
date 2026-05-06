@@ -1,0 +1,39 @@
+.mainDiv{
+    display: flex;
+    border: #0a673a solid 1px;
+}
+
+.userInfoDiv{
+    height: 100%;
+    width: 20%;
+    margin-left: 5px;
+}
+
+.statisticDiv{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 10%;
+    margin-left: 5px;
+}
+
+.statisticDiv p{
+    margin: 10px 0 0 0;
+}
+
+.divButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+    gap: 10px;
+}
+
+.divButtons button{
+    background: #0a673a;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}

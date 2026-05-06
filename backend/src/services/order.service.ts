@@ -17,14 +17,14 @@ class OrderService{
         return orderPresenter.OrderPublicInfo(entities, total, limit, query.page)
     }
 
-    public async getOrdersStatistic(): Promise<{total: number, aggre: number, in_work: number, disaggre: number, dubbing: number, new: number}> {
+    public async getOrdersStatistic(): Promise<{total: number, agree: number, in_work: number, disagree: number, dubbing: number, new: number}> {
 
-        const [total, aggre, in_work, disaggre, dubbing, New, Null] = await orderRepository.getOrdersStatistic()
+        const [total, agree, in_work, disagree, dubbing, New, Null] = await orderRepository.getOrdersStatistic()
         return{
             total,
-            aggre,
+            agree,
             in_work,
-            disaggre,
+            disagree,
             dubbing,
             new: New + Null
         }

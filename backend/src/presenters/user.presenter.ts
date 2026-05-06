@@ -37,14 +37,14 @@ class UserPresenter {
             surname: entity.surname,
             email: entity.email,
             role: entity.role,
-            last_login: entity.last_login,
-            isActive: entity.isActive,
-            isBanned: entity.isBanned,
+            last_login: `${entity.last_login}`,
+            isActive: `${entity.isActive}`,
+            isBanned: `${entity.isBanned}`,
             statistics:{
                 total: entity.total.length,
-                aggre: entity.aggre.length,
+                agree: entity.aggre.length,
                 in_work: entity.in_work.length,
-                disaggre: entity.disaggre.length,
+                disagree: entity.disaggre.length,
                 dubbing: entity.dubbing.length,
             }
         }

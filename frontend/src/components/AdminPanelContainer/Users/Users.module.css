@@ -1,0 +1,54 @@
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;;
+    gap: 15px;
+}
+.mainStatisticDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.divP{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divP p{
+    margin: 5px 0 0 0;
+}
+
+.divStatistic{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.divStatistic p{
+    margin: 5px 0 5px 0;
+
+}
+
+.divButton{
+    width: 90%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.divButton button{
+    padding: 10px 10px;
+    background: #0a673a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.usersDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 90%;
+}

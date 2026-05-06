@@ -49,6 +49,11 @@ Final project
 - Possible to add comments and update the order in modal window;
 - Added the ability to download an Excel file;
 
+## AdminPanel Page 
+- Get all Orders Statistics status;
+- Get all users (managers, admin);
+- Add pagination (doesn't work due to lack of users);
+
 
 ## Installation
 

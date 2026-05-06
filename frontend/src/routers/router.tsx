@@ -6,6 +6,8 @@ import { AuthLayout } from "../layouts/AuthLayout";
 import { OrderPage } from "../pages/OrderPage";
 import { LoginedUser } from "../hoc/LoginedUser";
 import { Refresh } from "../hoc/Refresh";
+import { AdminPanelPage } from "../pages/AdminPanelPage";
+import { IsAdmin } from "../hoc/IsAdmin";
 
 export const router = createBrowserRouter([
     {
@@ -24,8 +26,11 @@ export const router = createBrowserRouter([
                 element:<Refresh><AuthLayout/></Refresh>, children: [
                     {
                         path: "orders", element: <OrderPage/>
+                    },
+                    {
+                        path: "adminPanel", element: <IsAdmin><AdminPanelPage/></IsAdmin>
                     }
-                ]
+                ],
             }
         ]
     }

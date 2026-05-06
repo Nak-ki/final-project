@@ -4,6 +4,7 @@ const auth = "/auth";
 const orders ="/orders";
 const comments ="/comments";
 const groups ="/groups";
+const users ="/users";
 
 const urls = {
     auth: {
@@ -16,6 +17,7 @@ const urls = {
         getAll:  (query: string) => orders + query,
         update:  (id: string) => `${orders}/${id}`,
         downloadExcel: (query: string) => `${orders}/download-excel${query}` ,
+        getStatistics: `${orders}/statistics`,
     },
     comments: {
         create: (id: string) => `${comments}/${id}`,
@@ -23,6 +25,12 @@ const urls = {
     groups: {
         create: groups,
         getAll: groups,
+    },
+    users: {
+        getAll: (query: string) => users + query,
+        create: users,
+
+
     }
 
 

@@ -7,11 +7,13 @@ import { groupService } from "../../services/groupService";
 interface IState {
     groups: IGroup[];
     addGroupTrigger: boolean;
+    errorMessage: any;
 }
 
 const initialState: IState = {
     groups: [],
     addGroupTrigger: false,
+    errorMessage: null,
 }
 
 
@@ -53,6 +55,11 @@ const groupSlice = createSlice({
 
         .addCase(getAll.fulfilled, (state, action) => {
             state.groups = action.payload
+
+        })
+        .addCase(create.rejected, (state, action) => {
+            state.errorMessage = action.payload
+            console.log(action.payload);
 
         })
         .addMatcher(isFulfilled(create), (state, action) => {

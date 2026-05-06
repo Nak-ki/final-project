@@ -1,0 +1,57 @@
+.style {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    background: white;
+    bgcolor: background.paper;
+    border: none;
+    boxShadow: 24px;
+    p: 4;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.formWindow {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formWindow> label > input {
+    height: 15px;
+    width: 330px;
+    padding: 14px;
+    background: #E3E3E3;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.buttonsDiv{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.buttonsDiv > button {
+    border: none;
+    background: #0a673a;
+    padding: 20px 40px 20px 40px;
+    color: white;
+    border-radius: 8px;
+}
+
+.divCreate{
+    display: flex;
+    justify-content: start;
+    width: 90%;
+}
+
+.createButton {
+    padding: 10px 20px 10px 20px;
+    background: #0a673a;
+    color: white;
+}

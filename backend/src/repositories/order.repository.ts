@@ -211,7 +211,7 @@ class OrderRepository {
                     $limit: 25
                 }
             ]),
-            Order.countDocuments(filterObj),
+            Order.countDocuments(filterObj ? filterObj : {}),
             25
         ])
     }

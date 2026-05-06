@@ -3,6 +3,7 @@ import {AxiosError} from "axios";
 import { IOrderWithComments } from "../../interfaces/IOrder";
 import { orderService } from "../../services/orderService";
 import { saveAs } from 'file-saver';
+import { IOrderStatistics } from "../../interfaces/IOrderStatistics";
 
 
 
@@ -12,6 +13,7 @@ interface IState {
     limit: number
     page: string
     updateTrigger: boolean
+    statistics: IOrderStatistics
 }
 
 const initialState: IState = {
@@ -20,6 +22,7 @@ const initialState: IState = {
     limit: null,
     page: null,
     updateTrigger: false,
+    statistics: null,
 }
 
 
@@ -66,6 +69,20 @@ const downloadExcel = createAsyncThunk<void, {query: string}>(
     }
 )
 
+const getStatistics = createAsyncThunk<IOrderStatistics, void>(
+    "orderSlice/getStatistics",
+    async (_, thunkAPI) => {
+        try {
+            const {data} = await orderService.getStatistics();
+            return data
+        }
+        catch (e) {
+            const error = e as AxiosError
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
+
 
 
 const orderSlice = createSlice({
@@ -79,6 +96,9 @@ const orderSlice = createSlice({
             state.limit = action.payload.limit
             state.total = action.payload.total
         })
+        .addCase(getStatistics.fulfilled, (state, action) => {
+            state.statistics = action.payload
+        })
         .addMatcher(isFulfilled(update), state => {
         state.updateTrigger = !state.updateTrigger
     })
@@ -91,7 +111,8 @@ const orderActions = {
     ...actions,
     getAll,
     update,
-    downloadExcel
+    downloadExcel,
+    getStatistics
 }
 
 export {

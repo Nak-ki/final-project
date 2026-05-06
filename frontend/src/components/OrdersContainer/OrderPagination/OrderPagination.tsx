@@ -12,7 +12,8 @@ const OrderPagination = () => {
     return (
         <div>
             {
-             pages > 1 && pages >= 20 &&  <Pagination size={"medium"} count={pages} page={+page} boundaryCount={1} siblingCount={2} onChange={handleChange}/>
+             pages !== 1  &&  <Pagination size={"medium"} count={pages} page={+page} boundaryCount={1} siblingCount={2} onChange={handleChange}/>
+
             }
         </div>
     );

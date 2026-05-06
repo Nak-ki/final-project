@@ -11,6 +11,7 @@ import { updateOrder } from "../../../validators/orderValidator";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { orderActions } from "../../../store/slices/orderSlice";
 import { groupActions } from "../../../store/slices/groupSlice";
+import { authActions } from "../../../store/slices/authSlice";
 
 interface IProps {
     order: IOrderWithComments;
@@ -26,7 +27,7 @@ const ModalWindow :FC<IProps> = ({order}) => {
 
     // const inputRef = useRef(null)
 
-    const {groups} = useAppSelector(state => state.group)
+    const {groups, errorMessage} = useAppSelector(state => state.group)
     const dispatch = useAppDispatch()
 
 
@@ -92,13 +93,18 @@ const ModalWindow :FC<IProps> = ({order}) => {
         handleClose()
     }
 
-    const addGroup = () => {
+    const addGroup = async () => {
         const values = getValues("group")
-        dispatch(groupActions.create({name: values}))
-       // dispatch(groupActions.create({name: inputRef.current.value}));
+        const {meta: {requestStatus}} = await dispatch(groupActions.create({name: values}))
+
+        if (requestStatus === 'fulfilled') {
+            setChangeInput(false)
+        }
+        // dispatch(groupActions.create({name: inputRef.current.value}));
         // console.log(inputRef.current.value);
-       setChangeInput(false)
+
     }
+    console.log(errorMessage);
 
         return (
             <div>
@@ -115,10 +121,12 @@ const ModalWindow :FC<IProps> = ({order}) => {
                                 <label>Group
                                     { changeInput ?
                                         <>
-                                            <input type="text" name={"group"} placeholder={'Group'} {...register("group")}/>
+                                            <input className={ errorMessage && css.inputError} type="text" name={"group"} placeholder={'Group'} {...register("group")}/>
+                                            {errorMessage?.message && <p>{errorMessage?.message}</p>}
                                             <div>
                                                 <button type="button" onClick={() => setChangeInput(false)}>SELECT</button>
                                                 <button type="button" onClick={addGroup}>ADD GROUP</button>
+
                                             </div>
                                         </>
                                         :
@@ -130,7 +138,7 @@ const ModalWindow :FC<IProps> = ({order}) => {
                                                 }
                                             </select>
                                             <div>
-                                                <button type="button" onClick={() => setChangeInput(true)} className={css.addGroups}>ADD GROUPS</button>
+                                                <button className={css.addGroups} type="button" onClick={() => setChangeInput(true)} >ADD GROUPS</button>
                                             </div>
                                         </>
                                     }
@@ -138,7 +146,6 @@ const ModalWindow :FC<IProps> = ({order}) => {
                                </div>
                             <label>Status
                                 <select name={"status"} {...register("status")}>
-                                    <option value="">all status</option>
                                     <option value="In work">In work</option>
                                     <option value="New">New</option>
                                     <option value="Aggre">Aggre</option>

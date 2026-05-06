@@ -1,0 +1,25 @@
+import { useAppSelector } from "./useAppSelector";
+import { useSearchParams } from "react-router-dom";
+
+const useAppUserPagination = () => {
+
+    const {total, limit} = useAppSelector(state => state.user);
+    const [query, setQuery] = useSearchParams({page: "1"})
+
+    const page = query.get("page" ) ? query.get("page") : "1";
+
+    const pages = Math.ceil(total / limit)
+
+    return {
+        page,
+        pages,
+        handleChange: (event: React.ChangeEvent<unknown>, value: number) => {
+            setQuery(prev => {
+                prev.set('page', (value).toString())
+                return prev
+            })
+        }
+    }
+};
+
+export {useAppUserPagination}

@@ -39,7 +39,7 @@ const Header = () => {
             </div>
                 <div className={css.tools}>
                     <p>{currentUser && currentUser.name}</p>
-                    { currentUser && currentUser.role === RoleEnum.ADMIN && <button className={css.adminButton}><ManageAccounts/></button>}
+                    { currentUser && currentUser.role === RoleEnum.ADMIN && <button className={css.adminButton} onClick={() => navigate('/adminPanel?page=1')}><ManageAccounts/></button>}
                     <button onClick={logout} className={css.logoutButton}><Logout/></button>
                 </div>
         </div>

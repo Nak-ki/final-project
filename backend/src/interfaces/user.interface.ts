@@ -40,14 +40,14 @@ export interface IUserRes {
     name: string;
     surname: string;
     role: RoleEnum;
-    isActive: boolean;
-    isBanned: boolean;
-    last_login: Date;
+    isActive: string;
+    isBanned: string;
+    last_login: string;
     statistics: {
         total: number,
-        aggre: number,
+        agree: number,
         in_work: number,
-        disaggre: number,
+        disagree: number,
         dubbing: number,
     }
 }

@@ -8,6 +8,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { userActions } from "../../../store/slices/userSlice";
 import { createUser } from "../../../validators/userValidator";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 
 
 
@@ -19,6 +20,10 @@ const CreateModalWindow  = () => {
     })
 
     const dispatch = useAppDispatch()
+    const {userError} = useAppSelector(state => state.user)
+
+
+
 
 
     const [open, setOpen] = useState(false);
@@ -64,6 +69,7 @@ const CreateModalWindow  = () => {
                             <input className={errors.surname && css.inputError} type={"text"} name={"surname"} placeholder={"surname"} {...register("surname")} />
                             {errors.surname && errors.surname.message}
                         </label>
+                        {userError &&  userError.message }
                         <div className={css.buttonsDiv}>
                             <button onClick={handleClose}>CLOSE</button>
                             <button>SUBMIT</button>

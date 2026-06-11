@@ -18,9 +18,12 @@ Final project
 - Get all users and their statistics, with pagination, limit: 25, sort by default ( createdAt: -1(DESC));
 - Can create link for activate manager's account;
 - Get orders statistics;
+- Can ban/unban user;
+- Create link for activate account and recovery password;
 
 ### Manager:
 - Can activate account use link;
+- Use the link to activate account and recovery password;
 
 
 ## Orders

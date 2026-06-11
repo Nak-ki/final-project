@@ -94,6 +94,7 @@ class AuthMiddleware {
                         break;
                 }
 
+
                 const tokenEntity = await actionTokenRepository.getByToken(token);
 
                 if (!tokenEntity) {

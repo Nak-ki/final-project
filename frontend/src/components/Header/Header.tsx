@@ -34,7 +34,7 @@ const Header = () => {
 
     return (
         <div className={css.Header}>
-            <div className={css.logo}>
+            <div className={css.logo} onClick={() => navigate("/orders")}>
                 <h1>Logo</h1>
             </div>
                 <div className={css.tools}>

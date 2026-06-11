@@ -13,7 +13,7 @@
 					"name": "SignIn",
 					"event": [
 						{
-							"listen": "test",
+						"listen": "test",
 							"script": {
 								"exec": [
 									"const body = JSON.parse(responseBody);\r",
@@ -140,13 +140,49 @@
 					"response": []
 				},
 				{
+					"name": "getRecovery-passwordLink",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/recovery-password/6a0c6e4965e774b6894a525b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"recovery-password",
+								"6a0c6e4965e774b6894a525b"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "activateAccount",
 					"request": {
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"password\": \"Abracadabra1\"\n}",
+							"raw": "{\n    \"password\": \"Abracadabra2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -154,14 +190,49 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkZTU1ZDJmMjYxYmZiMWY0ODNjYTkiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTM1NzUyNCwiZXhwIjoxNzU1MzU5MzI0fQ.9uErrltPBKdSlok0SVfH2zk2l7rea01STZUvnNOrbeM",
+							"raw": "{{baseUrl}}/auth/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTBjNmU0OTY1ZTc3NGI2ODk0YTUyNWIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc4MTAxMTE0NiwiZXhwIjoxNzgxMDEyOTQ2fQ.Il-PTm-s72kGQI_e-nOePV0yFNNGhBCNCCeWW6TliCg",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"auth",
 								"activate",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODlkZTU1ZDJmMjYxYmZiMWY0ODNjYTkiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTM1NzUyNCwiZXhwIjoxNzU1MzU5MzI0fQ.9uErrltPBKdSlok0SVfH2zk2l7rea01STZUvnNOrbeM"
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTBjNmU0OTY1ZTc3NGI2ODk0YTUyNWIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc4MTAxMTE0NiwiZXhwIjoxNzgxMDEyOTQ2fQ.Il-PTm-s72kGQI_e-nOePV0yFNNGhBCNCCeWW6TliCg"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recovery-password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"Abracadabra3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/recovery-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTBjNmU0OTY1ZTc3NGI2ODk0YTUyNWIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc4MTAxMTI3OCwiZXhwIjoxNzgxMDEzMDc4fQ.qvHQl8j__1Xp9sRMNvgfh8VpTF2WmPObaq2bXOd2DVw",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"recovery-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTBjNmU0OTY1ZTc3NGI2ODk0YTUyNWIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc4MTAxMTI3OCwiZXhwIjoxNzgxMDEzMDc4fQ.qvHQl8j__1Xp9sRMNvgfh8VpTF2WmPObaq2bXOd2DVw"
 							],
 							"query": [
 								{
@@ -205,8 +276,86 @@
 				{
 					"name": "GetME",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ban",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/ban/6a0c6e4965e774b6894a525b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"ban",
+								"6a0c6e4965e774b6894a525b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unban",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/unban/6a0c6e4965e774b6894a525b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"unban",
+								"6a0c6e4965e774b6894a525b"
+							]
+						}
 					},
 					"response": []
 				}

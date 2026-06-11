@@ -16,6 +16,7 @@ interface IState {
     page: string
     updateTrigger: boolean
     createTrigger: boolean
+    userError:{key: number, message: string}
 
 }
 
@@ -26,6 +27,7 @@ const initialState: IState = {
     page: null,
     updateTrigger: false,
     createTrigger: false,
+    userError: null
 }
 
 
@@ -68,10 +70,13 @@ const userSlice = createSlice({
             state.limit = action.payload.limit
             state.total = action.payload.total
         })
+        .addCase(create.rejected, (state, action) => {
+            state.userError = action.payload as {key: number, message: string}
+        })
         .addMatcher(isFulfilled(create), (state, action) => {
             state.createTrigger = !state.createTrigger
+            state.userError = null
         })
-
 
 })
 

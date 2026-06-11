@@ -87,6 +87,10 @@ class UserRepository {
         return await User.findById(userId);
     }
 
+    public async getUserByIdWithPassword(userId: string): Promise<IUser | null> {
+        return await User.findById(userId).select("+password");
+    }
+
     public async getByEmail(email: string): Promise<IUser | null> {
         return await User.findOne({ email }).select("+password");
     }
@@ -102,6 +106,14 @@ class UserRepository {
     public async getLastIdUser(): Promise<number> {
         const [user] = await User.find().sort({id: -1}).limit(1)
         return user.id
+    }
+
+    public async banUser(userId: string): Promise<void> {
+        await User.findByIdAndUpdate(userId, {isBanned: true});
+    }
+
+    public async unbanUser(userId: string): Promise<void> {
+        await User.findByIdAndUpdate(userId, {isBanned: false});
     }
 
 

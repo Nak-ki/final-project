@@ -13,6 +13,7 @@ router.post(
     "/sign-in",
     commonMiddleware.isBodyValid(AuthValidator.SignIn),
     userMiddleware.isUserExistByEmail(),
+    userMiddleware.isBanned(),
     userMiddleware.isUserActive(),
     authController.signIn,
 );
@@ -35,11 +36,41 @@ router.delete(
     authController.logout
 )
 
+router.patch(
+    "/ban/:userId",
+    authMiddleware.checkAccessToken,
+    userMiddleware.isAdmin(),
+    authController.banUser
+)
+
+router.patch(
+    "/unban/:userId",
+    authMiddleware.checkAccessToken,
+    userMiddleware.isAdmin(),
+    authController.unbanUser
+)
+
 router.post(
     "/activate/:userId",
     authMiddleware.checkAccessToken,
     userMiddleware.isAdmin(),
     authController.getActivateLink
+)
+router.post(
+    "/recovery-password/:userId",
+    authMiddleware.checkAccessToken,
+    userMiddleware.isAdmin(),
+    authController.getRecoveryPasswordLink
+)
+
+router.patch(
+    "/recovery-password/:actionToken",
+    authMiddleware.checkActionToken(ActionTokenTypeEnum.RECOVERY_PASSWORD),
+    commonMiddleware.isBodyValid(AuthValidator.CheckPassword),
+    userMiddleware.isPasswordEqual(),
+    authController.recoveryPassword
+
+
 )
 
 router.patch(

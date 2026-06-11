@@ -1,21 +1,17 @@
-
-import {ITokenPair, ITokenPayload} from "../interfaces/token.interface";
-import {
-    ISignIn,
-    IUser,
-} from "../interfaces/user.interface";
+import { ITokenPair, ITokenPayload } from "../interfaces/token.interface";
+import { ISignIn, IUser } from "../interfaces/user.interface";
 import { tokenRepository } from "../repositories/token.repository";
 import { userRepository } from "../repositories/user.repository";
 
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
-import {ApiError} from "../errors/api.error";
+import { ApiError } from "../errors/api.error";
 import dayjs from "dayjs";
 import { ActionTokenTypeEnum } from "../enums/action-token-type.enum";
 import { actionTokenRepository } from "../repositories/action-token.repository";
 import { config } from "../configs/configs";
 import { userPresenter } from "../presenters/user.presenter";
-
+import { RoleEnum } from "../enums/role.enum";
 
 
 class AuthService {
@@ -114,6 +110,69 @@ class AuthService {
 
     public async logout(jwtPayload: ITokenPayload): Promise<void> {
         await tokenRepository.logout(jwtPayload.userId);
+    }
+
+    public async banUser(
+        userId: string
+    ): Promise<void> {
+        const user = await userRepository.getById(userId);
+
+        if (user.role === RoleEnum.ADMIN) {
+            throw new ApiError("You can't ban yourself!", 401)
+
+        }
+
+        await tokenRepository.deleteOneByParams({ _userId: userId});
+
+        await userRepository.banUser(
+           userId,
+        );
+    }
+
+    public async unbanUser(
+       userId: string,
+    ): Promise<void> {
+
+        await userRepository.unbanUser(
+            userId,
+        );
+    }
+
+    public async getRecoveryPasswordLink(id: string): Promise<string> {
+        const user = await userRepository.getById(id);
+
+        if (!user) {
+            throw new ApiError("User not found", 404);
+        }
+
+        const token = tokenService.generateActionTokens(
+            { userId: user._id, role: user.role },
+            ActionTokenTypeEnum.RECOVERY_PASSWORD,
+        );
+
+        await actionTokenRepository.create({
+            type: ActionTokenTypeEnum.RECOVERY_PASSWORD,
+            _userId: user._id,
+            token,
+        });
+        return `${config.FRONT_URL}/recovery-password/${token}`
+
+    }
+
+    public async recoveryPassword(
+        jwtPayload: ITokenPayload,
+        password: string,
+    ): Promise<void> {
+
+        const hashPassword = await passwordService.hashPassword(password);
+
+        await userRepository.updateById(jwtPayload.userId, { password: hashPassword});
+
+        await actionTokenRepository.deleteManyByParams({
+            _userId: jwtPayload.userId,
+            type: ActionTokenTypeEnum.RECOVERY_PASSWORD,
+        });
+        await tokenRepository.deleteManyByParams({ _userId: jwtPayload.userId });
     }
 
 }

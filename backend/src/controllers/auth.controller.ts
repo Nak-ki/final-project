@@ -75,6 +75,58 @@ class AuthController {
             next(e);
         }
     }
+
+    public async banUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId = req.params.userId;
+            await authService.banUser(userId);
+            res.sendStatus(204);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async unbanUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId = req.params.userId;
+            await authService.unbanUser(userId);
+            res.sendStatus(204);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+
+
+    public async getRecoveryPasswordLink(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
+        try {
+            const id = req.params.userId
+            const result = await authService.getRecoveryPasswordLink(id)
+            res.status(201).json(result);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async recoveryPassword(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
+        try {
+            const payload = req.res.locals.jwtPayload as ITokenPayload
+            const dto = req.body as {password: string}
+            await authService.recoveryPassword(payload, dto.password)
+            res.sendStatus(204);
+        } catch (e) {
+            next(e);
+        }
+    }
+
 }
 
     export const authController = new AuthController();
